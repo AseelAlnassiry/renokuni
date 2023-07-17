@@ -1,18 +1,14 @@
-import { useQuery } from "@apollo/client";
-import { useEffect, useState } from "react";
-import GET_SEARCH from "../apollo/search";
-import { Link } from "react-router-dom";
+import { useQuery } from '@apollo/client';
+import { useState } from 'react';
+import GET_SEARCH from '../apollo/search';
+import { Link } from 'react-router-dom';
 
 const truncate = (str) => {
-  return str.length > 30 ? str.substring(0, 30) + "..." : str;
+  return str.length > 30 ? str.substring(0, 30) + '...' : str;
 };
 
 const SearchModal = () => {
-  const [search, setSearch] = useState("");
-
-  useEffect(() => {
-    return () => {};
-  }, [search]);
+  const [search, setSearch] = useState('');
 
   const { data } = useQuery(GET_SEARCH, {
     variables: { term: search },
@@ -21,21 +17,15 @@ const SearchModal = () => {
   return (
     <div>
       {/* Open the modal using ID.showModal() method */}
-      <button
-        className="btn btn-circle btn-ghost"
-        onClick={() => window.my_modal_2.showModal()}
-      >
-        <img className="h-5 w-5" src="search.svg" alt="" />
-      </button>
+
       <dialog id="my_modal_2" className="modal">
         <form
           method="dialog"
-          className="modal-box mt-20 flex h-fit w-fit flex-col gap-2 self-start bg-transparent shadow-none"
-        >
+          className="modal-box mt-20 flex h-fit w-fit flex-col gap-2 self-start bg-transparent shadow-none">
           <input
             type="text"
             placeholder="What's to watch these days?"
-            className="input w-80 bg-base-200 md:w-96 rounded-full"
+            className="input w-80 rounded-full bg-base-200 md:w-96"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
@@ -46,10 +36,9 @@ const SearchModal = () => {
                   <Link
                     to={`/${anime.id}`}
                     onClick={() => {
-                      setSearch("");
+                      setSearch('');
                       window.my_modal_2.close();
-                    }}
-                  >
+                    }}>
                     <img
                       className="h-5 w-5 rounded-full shadow sm:h-10 sm:w-10"
                       src={anime.coverImage.extraLarge}
@@ -60,9 +49,7 @@ const SearchModal = () => {
                         ? truncate(anime.title.english)
                         : truncate(anime.title.romaji)}
                     </span>
-                    {anime.isAdult && (
-                      <span className="badge bg-accent">Adult</span>
-                    )}
+                    {anime.isAdult && <span className="badge bg-accent">Adult</span>}
                   </Link>
                 </li>
               ))}
